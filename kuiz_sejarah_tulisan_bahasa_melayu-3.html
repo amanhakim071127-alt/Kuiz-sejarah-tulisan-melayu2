@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Misteri Sistem Tulisan Bahasa Melayu</title>
+<style>
+:root{--green:#123b2e;--green2:#1b5943;--gold:#d7b56d;--cream:#f7f0df;--ink:#29271f;--brown:#68452e;--muted:#6f6a5d;--right:#dff2df;--wrong:#f9e2dc}
+*{box-sizing:border-box}
+body{margin:0;font-family:Georgia,"Times New Roman",serif;background-color:#c6b18a;background-image:linear-gradient(90deg,rgba(69,47,26,.10) 1px,transparent 1px),linear-gradient(rgba(69,47,26,.08) 1px,transparent 1px),radial-gradient(ellipse at 15% 20%,rgba(255,246,211,.65),transparent 35%),radial-gradient(ellipse at 85% 75%,rgba(104,69,46,.25),transparent 32%),linear-gradient(135deg,#d9c79f,#b99a6d 48%,#e3d3ad);background-size:34px 34px,34px 34px,auto,auto,auto;color:var(--ink);min-height:100vh;padding:20px;position:relative;isolation:isolate}
+body:before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.58;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='520' height='520' viewBox='0 0 520 520'%3E%3Cg fill='none' stroke='%2368462c' stroke-opacity='.42'%3E%3Cpath stroke-width='2' d='M20 95 Q110 20 190 80 T350 75 T510 35 M0 130 Q120 65 205 120 T410 105 T520 80 M25 420 Q120 360 215 410 T400 390 T520 430'/%3E%3Ccircle cx='430' cy='360' r='76' stroke-width='4'/%3E%3Ccircle cx='430' cy='360' r='62' stroke-width='1.5'/%3E%3Cpath stroke-width='3' d='M430 292 L444 346 L498 360 L444 374 L430 428 L416 374 L362 360 L416 346 Z'/%3E%3Cpath stroke-width='1.5' d='M430 305 V415 M375 360 H485 M392 322 L468 398 M468 322 L392 398'/%3E%3Cpath stroke-width='2' d='M38 270 l35 -20 24 12 16 -30 25 18 20 -5 14 32 -30 14 -25 -6 -18 21 -27 -12z'/%3E%3Cpath stroke-dasharray='5 7' stroke-width='2' d='M55 280 Q110 320 165 260 T265 300 T350 235'/%3E%3C/g%3E%3C/svg%3E")}
+.shell{max-width:850px;margin:0 auto;position:relative}
+.topline{display:inline-block;position:relative;left:50%;transform:translateX(-50%);max-width:100%;white-space:nowrap;background:#244332;color:#f0dba8;border:1px solid #b99a55;padding:9px 16px;border-radius:3px;box-shadow:3px 4px 0 rgba(70,46,25,.25);text-align:center;font:700 .72rem Arial,sans-serif;letter-spacing:.12em;text-transform:uppercase;margin:10px 0 16px}
+
+.topline{color:#f0dba8;text-align:center;font:700 .78rem Arial,sans-serif;letter-spacing:.18em;text-transform:uppercase;margin:10px 0 16px}
+.card{background:rgba(247,240,223,.97);border:3px double #8e6a39;border-radius:4px;overflow:hidden;box-shadow:0 14px 36px #4b321f55}
+.hero{padding:28px 22px 24px;text-align:center;background:linear-gradient(135deg,#193b2d,#294a35);color:var(--cream);border-bottom:4px double #d7b56d;position:relative}
+.emblem{font-size:2.6rem;margin-bottom:8px;filter:sepia(.25)}
+.kicker{font:700 .72rem Arial,sans-serif;letter-spacing:.16em;color:#e7cb86;text-transform:uppercase}
+h1{font-size:clamp(1.7rem,5vw,2.65rem);line-height:1.12;margin:10px 0;color:#fff4d8}
+.hero p{max-width:600px;margin:0 auto;color:#eee3c8;line-height:1.55;font-size:1rem}
+.content{padding:clamp(18px,4vw,34px)}
+.pill{display:inline-block;border:1px solid #c5a45c;border-radius:999px;padding:7px 12px;color:var(--brown);font:700 .75rem Arial,sans-serif;letter-spacing:.04em}
+.progressrow{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:20px 0 9px;font:700 .83rem Arial,sans-serif;color:var(--green)}
+.track{height:8px;background:#e4dac2;border-radius:99px;overflow:hidden}
+.fill{height:100%;width:0;background:linear-gradient(90deg,#a77d36,var(--gold));transition:width .25s}
+.question{font-size:clamp(1.25rem,3.6vw,1.75rem);line-height:1.35;margin:23px 0 18px}
+.options{display:grid;gap:11px}
+.option{width:100%;display:flex;align-items:flex-start;gap:12px;text-align:left;padding:14px 15px;border:1.5px solid #d3c6a9;background:#fbf3df;border-radius:3px;color:var(--ink);font:500 1rem/1.4 Arial,sans-serif;cursor:pointer;transition:.15s}
+.option:hover:not(:disabled){border-color:var(--green2);background:#f0ead8;transform:translateY(-1px)}
+.letter{flex:0 0 28px;height:28px;display:grid;place-items:center;border-radius:8px;background:#e9dfc8;color:var(--green);font-weight:800}
+.option.correct{background:var(--right);border-color:#4e8a53}
+.option.incorrect{background:var(--wrong);border-color:#b45b4e}
+.option:disabled{cursor:default}
+.feedback{margin-top:16px;padding:14px 15px;border-radius:12px;line-height:1.5;display:none;font: .95rem/1.5 Arial,sans-serif}
+.feedback.show{display:block}
+.feedback.good{background:var(--right);border:1px solid #94bf94}
+.feedback.bad{background:var(--wrong);border:1px solid #d69b91}
+.actions{display:flex;justify-content:space-between;gap:12px;margin-top:22px;flex-wrap:wrap}
+button.action{border:0;border-radius:3px;padding:13px 18px;font:700 .95rem Arial,sans-serif;cursor:pointer}
+.primary{background:var(--green);color:white}
+.primary:hover{background:var(--green2)}
+.secondary{background:#e5dac1;color:var(--green)}
+button:focus-visible{outline:3px solid #bd8d37;outline-offset:3px}
+button:disabled{opacity:.45;cursor:not-allowed}
+.footer{text-align:center;color:#e6d8b8;font: .78rem/1.5 Arial,sans-serif;margin:17px 8px 8px}
+.result{text-align:center;padding:10px 0}
+.scorecircle{width:128px;height:128px;border-radius:50%;border:5px double var(--gold);background:#173e30;color:#fff0c9;margin:18px auto;display:grid;place-items:center;font-size:2rem;font-weight:bold}
+.result h2{color:var(--green);font-size:1.8rem}
+.result p{line-height:1.6}
+.review{text-align:left;margin-top:20px}
+.review details{background:#fffaf0;border:1px solid #d8c9a8;border-radius:10px;margin:9px 0;padding:11px 13px;font: .9rem/1.5 Arial,sans-serif}
+.review summary{cursor:pointer;font-weight:bold}
+.small{font: .8rem/1.5 Arial,sans-serif;color:var(--muted)}
+@media(max-width:520px){body{padding:10px}.hero{padding:23px 15px}.content{padding:18px 14px}.actions button{flex:1}.option{padding:12px}.topline{font-size:.68rem}}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="topline">Muzium Maya • Jejak Sejarah, Citra Masa Hadapan</div>
+  <main class="card">
+    <header class="hero">
+      <div class="emblem" aria-hidden="true">🏛️</div>
+      <div class="kicker">Pengembaraan ilmu interaktif</div>
+      <h1>Misteri Sistem Tulisan<br>Bahasa Melayu</h1>
+      <p>Uji pengetahuan anda tentang perjalanan tulisan Melayu — daripada prasasti awal hingga sistem ejaan Rumi moden.</p>
+    </header>
+    <section class="content" id="quiz">
+      <span class="pill">12 SOALAN • ANEKA PILIHAN</span>
+      <div class="progressrow"><span id="progressText">Soalan 1 daripada 12</span><span id="scoreText">Markah: 0</span></div>
+      <div class="track" aria-label="Kemajuan kuiz"><div class="fill" id="progressFill"></div></div>
+      <h2 class="question" id="questionText"></h2>
+      <div class="options" id="options"></div>
+      <div class="feedback" id="feedback" role="status" aria-live="polite"></div>
+      <div class="actions">
+        <button class="action secondary" id="restartBtn" type="button">↻ Mula semula</button>
+        <button class="action primary" id="nextBtn" type="button" disabled>Soalan seterusnya →</button>
+      </div>
+    </section>
+    <section class="content result" id="result" hidden></section>
+  </main>
+  <div class="footer">Mengenali Sejarah, Menghargai Warisan, Membina Masa Hadapan Bahasa Melayu.</div>
+</div>
+<script>
+const questions = [
+ {q:"Apakah fungsi utama sistem tulisan?",a:["Menggantikan semua bahasa lain","Merekodkan bahasa dan menyampaikan maklumat","Menghapuskan penggunaan bahasa lisan","Menjadikan semua perkataan simbol matematik"],correct:1,why:"Sistem tulisan ialah lambang grafik yang digunakan untuk merekodkan bahasa, menyimpan pengetahuan dan mewariskan pengalaman."},
+ {q:"Apakah aksara yang digunakan dalam Prasasti Kedukan Bukit bertarikh 683 Masihi?",a:["Jawi","Pallava","Rumi moden","Cyrillic"],correct:1,why:"Prasasti Kedukan Bukit merupakan contoh penting penggunaan aksara Pallava untuk merekodkan bahasa Melayu Kuno."},
+ {q:"Apakah perbezaan yang tepat antara bahasa dengan aksara?",a:["Kedua-duanya bermaksud perkara yang sama","Bahasa ialah sistem komunikasi, manakala aksara ialah lambang visual untuk menulis bahasa","Aksara hanya digunakan untuk bahasa moden","Bahasa hanya wujud dalam bentuk tulisan"],correct:1,why:"Bahasa mempunyai unsur seperti bunyi, perkataan dan tatabahasa; aksara ialah lambang visual untuk merekodkan bahasa."},
+ {q:"Tulisan Kawi berkembang dalam lingkungan tradisi persuratan yang manakah?",a:["Nusantara, khususnya Jawa","Eropah Utara sahaja","Amerika Selatan","Mesir moden sahaja"],correct:0,why:"Kawi ialah tradisi aksara yang berkembang dalam lingkungan budaya Nusantara, khususnya Jawa, dan berkait dengan persuratan serta pentadbiran."},
+ {q:"Apakah arah penulisan tulisan Jawi?",a:["Dari kiri ke kanan","Dari kanan ke kiri","Dari atas ke bawah sahaja","Mengikut arah jam"],correct:1,why:"Tulisan Jawi mengikuti arah penulisan Arab, iaitu dari kanan ke kiri."},
+ {q:"Apakah artifak yang penting sebagai bukti perkembangan tulisan Jawi di Alam Melayu?",a:["Prasasti Kedukan Bukit sahaja","Batu Bersurat Terengganu","Mesin taip moden","Komputer peribadi"],correct:1,why:"Batu Bersurat Terengganu merupakan bukti sejarah penting berkaitan perkembangan tulisan Jawi dan Islam di Alam Melayu."},
+ {q:"Siapakah Za'ba?",a:["Zainal Abidin Ahmad, tokoh bahasa, pendidik dan penulis","Tokoh yang mencipta aksara Pallava","Presiden Indonesia pada tahun 1972","Penemu Prasasti Kedukan Bukit"],correct:0,why:"Za'ba ialah nama pena Zainal Abidin Ahmad. Beliau menyumbang kepada penulisan dan penyusunan sistem ejaan bahasa Melayu."},
+ {q:"Antara berikut, yang manakah karya yang dikaitkan dengan Za'ba?",a:["Hikayat Hang Tuah sahaja","Rahsia Tulisan Jawi dan Daftar Ejaan Melayu (Jawi-Rumi)","Batu Bersurat Terengganu","Sistem Ejaan Wilkinson sahaja"],correct:1,why:"Rahsia Tulisan Jawi diterbitkan pada 1931, manakala Daftar Ejaan Melayu (Jawi-Rumi) diterbitkan pada 1949 menurut bahan muzium."},
+ {q:"Sistem Ejaan Kongres berkaitan dengan Kongres Bahasa dan Persuratan Melayu Ketiga pada tahun…",a:["1904","1931","1956","1972"],correct:2,why:"Kongres Bahasa dan Persuratan Melayu Ketiga berlangsung pada 16 hingga 21 September 1956 dan membincangkan pembaharuan ejaan."},
+ {q:"Apakah perbezaan utama Sistem Ejaan Kongres dengan Sistem Ejaan Rumi Baharu?",a:["Kedua-duanya diperkenalkan pada tahun yang sama","Kongres berkaitan cadangan pembaharuan pada 1956, manakala Rumi Baharu diisytiharkan pada 1972","Kongres hanya membincangkan tulisan Jawi","Rumi Baharu tidak menggunakan huruf Rumi"],correct:1,why:"Sistem Ejaan Kongres ialah tahap penting pembaharuan pada 1956; Sistem Ejaan Rumi Baharu diisytiharkan pada 16 Ogos 1972."},
+ {q:"Bilakah Sistem Ejaan Rumi Baharu diisytiharkan penggunaannya secara serentak di Malaysia dan Indonesia?",a:["16 Ogos 1972","31 Ogos 1957","1 Januari 1904","16 September 1963"],correct:0,why:"Sistem Ejaan Rumi Baharu diisytiharkan pada 16 Ogos 1972 sebagai sebahagian usaha penyelarasan ejaan Malaysia–Indonesia."},
+ {q:"Mengapakah generasi muda perlu memelihara warisan sistem tulisan bahasa Melayu?",a:["Supaya semua tulisan lama dihentikan","Supaya manuskrip dan sejarah bahasa dapat dikaji serta diwariskan","Supaya bahasa Melayu tidak digunakan dalam pendidikan","Supaya ejaan berubah setiap hari"],correct:1,why:"Pemeliharaan manuskrip dan dokumentasi warisan membantu generasi masa kini memahami sejarah, budaya dan perkembangan bahasa Melayu."}
+];
+let current=0, score=0, answered=false, selections=[];
+const $=id=>document.getElementById(id);
+function render(){
+ answered=false;
+ $("quiz").hidden=false; $("result").hidden=true;
+ $("progressText").textContent=`Soalan ${current+1} daripada ${questions.length}`;
+ $("scoreText").textContent=`Markah: ${score}`;
+ $("progressFill").style.width=`${(current/questions.length)*100}%`;
+ const item=questions[current];
+ $("questionText").textContent=item.q;
+ $("options").innerHTML="";
+ $("feedback").className="feedback"; $("feedback").textContent="";
+ $("nextBtn").disabled=true;
+ $("nextBtn").textContent=current===questions.length-1?"Lihat keputusan →":"Soalan seterusnya →";
+ item.a.forEach((answer,i)=>{
+   const btn=document.createElement("button");
+   btn.type="button";btn.className="option";
+   const letter=document.createElement("span");letter.className="letter";letter.textContent=String.fromCharCode(65+i);
+   const label=document.createElement("span");label.textContent=answer;
+   btn.append(letter,label);btn.addEventListener("click",()=>choose(i,btn));
+   $("options").appendChild(btn);
+ });
+}
+function choose(index,btn){
+ if(answered)return;
+ answered=true;
+ const item=questions[current]; const correct=index===item.correct;
+ if(correct)score++;
+ selections[current]={chosen:index,correct};
+ [...$("options").children].forEach((b,i)=>{
+   b.disabled=true;
+   if(i===item.correct)b.classList.add("correct");
+   if(i===index&&!correct)b.classList.add("incorrect");
+ });
+ const fb=$("feedback");fb.className="feedback show "+(correct?"good":"bad");
+ fb.innerHTML=`<strong>${correct?"✓ Tepat sekali!":"✦ Belum tepat."}</strong> ${correct?"":"Jawapan yang betul ialah "+String.fromCharCode(65+item.correct)+". "+item.a[item.correct]+". "}<br>${item.why}`;
+ $("scoreText").textContent=`Markah: ${score}`;
+ $("progressFill").style.width=`${((current+1)/questions.length)*100}%`;
+ $("nextBtn").disabled=false;
+}
+function showResult(){
+ $("quiz").hidden=true;$("result").hidden=false;
+ const pct=Math.round(score/questions.length*100);
+ let message=pct>=85?"Cemerlang! Anda benar-benar menguasai jejak sejarah tulisan Melayu.":pct>=60?"Bagus! Anda sudah memahami banyak fakta. Teruskan meneroka galeri muzium.":"Teruskan usaha! Semak semula galeri Pallava, Kawi, Jawi dan perkembangan ejaan Rumi, kemudian cuba lagi.";
+ $("result").innerHTML=`<span class="pill">PENGEMBARAAN SELESAI</span><h2>Keputusan Kuiz</h2><div class="scorecircle">${score}/${questions.length}</div><p><strong>${pct}% markah</strong></p><p>${message}</p><div class="review"><h3>Semak jawapan</h3>${questions.map((q,i)=>`<details><summary>${i+1}. ${q.q}</summary><p><strong>Jawapan:</strong> ${String.fromCharCode(65+q.correct)}. ${q.a[q.correct]}</p><p>${q.why}</p></details>`).join("")}</div><div class="actions"><button class="action secondary" id="reviewRestart" type="button">↻ Cuba semula</button></div>`;
+ $("progressFill").style.width="100%";
+ $("reviewRestart").addEventListener("click",restart);
+}
+function restart(){current=0;score=0;selections=[];render();window.scrollTo({top:0,behavior:"smooth"});}
+$("nextBtn").addEventListener("click",()=>{if(!answered)return;if(current<questions.length-1){current++;render();}else showResult();});
+$("restartBtn").addEventListener("click",restart);
+render();
+</script>
+</body>
+</html>
